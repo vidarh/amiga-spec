@@ -1,3 +1,7 @@
+/* From: RKM Devices, Chapter 4, Console Device Example Code.
+ * Updated to compile with GCC under AROS
+ */
+
 /*
  * Console.c
  *
@@ -23,6 +27,7 @@
 #include <clib/intuition_protos.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifdef LATTICE
 int CXBRK(void) { return(0); }     /* Disable Lattice CTRL/C handling */
@@ -341,7 +346,7 @@ void QueueRead(struct IOStdReq *readreq, UBYTE *whereto)
  */
 LONG ConMayGetChar(struct MsgPort *msgport, UBYTE *whereto)
     {
-    register temp;
+    register int temp;
     struct IOStdReq *readreq;
 
     if (!(readreq = (struct IOStdReq *)GetMsg(msgport))) return(-1);
@@ -354,7 +359,7 @@ LONG ConMayGetChar(struct MsgPort *msgport, UBYTE *whereto)
  */
 UBYTE ConGetChar(struct MsgPort *msgport, UBYTE *whereto)
     {
-    register temp;
+    register int temp;
     struct IOStdReq *readreq;
 
     WaitPort(msgport);
