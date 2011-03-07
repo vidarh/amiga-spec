@@ -36,7 +36,7 @@ int chkabort(void) { return(0); }  /* really */
 #define CURSON    "\033[ p"
 #define DELCHAR   "\033[P"
 
-* SGR (set graphic rendition) */
+/* SGR (set graphic rendition) */
 #define COLOR02   "\033[32m"
 #define COLOR03   "\033[33m"
 #define ITALICS   "\033[3m"
@@ -56,16 +56,16 @@ LONG ConMayGetChar(struct MsgPort *, UBYTE *);
 void ConPuts(struct IOStdReq *, UBYTE *);
 void ConWrite(struct IOStdReq *, UBYTE *, LONG);
 void ConPutChar(struct IOStdReq *, UBYTE);
-void main(int argc, char **argv);
+int main(int argc, const char **argv);
 struct NewWindow nw =
     {
     10, 10,                           /* starting position (left,top) */
     620,180,                          /* width, height */
     -1,-1,                            /* detailpen, blockpen */
-    CLOSEWINDOW,                      /* flags for idcmp */
-    WINDOWDEPTH|WINDOWSIZING|
-    WINDOWDRAG|WINDOWCLOSE|
-    SMART_REFRESH|ACTIVATE,           /* window flags */
+    IDCMP_CLOSEWINDOW,                /* flags for idcmp */
+    WFLG_DEPTHGADGET|WFLG_SIZEGADGET|
+    WFLG_DRAGBAR|WFLG_CLOSEGADGET|
+    WFLG_SMART_REFRESH|WFLG_ACTIVATE, /* window flags */
     NULL,                             /* no user gadgets */
     NULL,                             /* no user checkmark */
     "Console Test",                   /* title */
@@ -88,14 +88,12 @@ BOOL OpenedConsole = FALSE;
 
 BOOL FromWb;
 
-void main(argc, argv)
-int argc;
-char **argv;
-    {
+int main(int argc, const char ** argv)
+{
     struct IntuiMessage *winmsg;
     ULONG signals, conreadsig, windowsig;
     LONG lch;
-    SHORT InControl = 0;
+    WORD InControl = 0;
     BOOL Done = FALSE;
     UBYTE ch, ibuf;
     UBYTE obuf[200];
@@ -222,7 +220,7 @@ char **argv;
                 {
                 switch(winmsg->Class)
                     {
-                    case CLOSEWINDOW:
+                    case IDCMP_CLOSEWINDOW:
                       Done = TRUE;
                       break;
                     default:
