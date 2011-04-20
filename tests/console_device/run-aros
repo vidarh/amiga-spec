@@ -1,0 +1,4 @@
+
+cd /home/vidarh/AROS-build/bin/linux-i386/AROS/
+DISPLAY=:1 boot/AROSBootstrap
+
