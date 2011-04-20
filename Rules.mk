@@ -1,5 +1,7 @@
 
 CC=i386-linux-aros-gcc
 
-% : %.c ;  $(CC) $(CFLAGS) $(CPPFLAGS)  -o $@ $< $(LDFLAGS) 
+%.o : %.c ;  $(CC) -c $(CFLAGS) $(CPPFLAGS)  -o $@ $^
+
+% : %.o ;  $(CC) $(CFLAGS) $(CPPFLAGS)  -o $@ $^ $(LDFLAGS) 
 
