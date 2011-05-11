@@ -8,3 +8,7 @@ subdirs: $(SUBDIRS)
 $(SUBDIRS):
 	$(MAKE) -C $@
 
+.PHONY: clean
+clean:
+	find -regex .*\*\\.o | xargs rm
+
